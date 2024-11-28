@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("chinesenumberconverter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2b86dd38bb50b51fc23133d21552603ca4944a3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5411e981d9a805cc94bba9c9acf83056e7d6f2b")]
 [assembly: System.Reflection.AssemblyProductAttribute("chinesenumberconverter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("chinesenumberconverter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

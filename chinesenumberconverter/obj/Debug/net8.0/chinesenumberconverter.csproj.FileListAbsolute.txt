@@ -26,3 +26,4 @@ D:\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\refint\chinese
 D:\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.pdb
 D:\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.genruntimeconfig.cache
 D:\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\ref\chinesenumberconverter.dll
+D:\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.sourcelink.json
