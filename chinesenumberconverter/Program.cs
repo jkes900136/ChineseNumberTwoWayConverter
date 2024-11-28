@@ -38,7 +38,7 @@ namespace chinesenumberconverter
                 }
                 long num = 0;
                 // 處理千百十範圍的四位數
-                Func<string, long> Parse4Digits = (s) =>
+                static long Parse4Digits(string s)
                 {
                     long lastDigit = 0;
                     long subNum = 0;
@@ -55,7 +55,7 @@ namespace chinesenumberconverter
                         var c = rawChar.ToString().Replace("〇", "零").Replace("兩", "二");
                         if (ChtNums.Contains(c))
                         {
-                            lastDigit = (long)ChtNums.IndexOf(c);
+                            lastDigit = ChtNums.IndexOf(c);
                             continuousDigit = false;
                         }
                         else if (int.TryParse(c, out originalDigit))
@@ -68,22 +68,17 @@ namespace chinesenumberconverter
                             numberGroupCounter++;
                             continuousDigit = true;
                         }
-                        else if (ChtUnits.ContainsKey(c))
+                        else if (ChtUnits.TryGetValue(c, out long unit))
                         {
                             if (c == "十" && lastDigit == 0) lastDigit = 1;
-                            long unit = ChtUnits[c];
                             subNum += lastDigit * unit;
                             lastDigit = 0;
                             continuousDigit = false;
                         }
-                        //else
-                        //{
-                        //    throw new ArgumentException($"包含無法解析的中文數字：{c}");
-                        //}
                     }
                     subNum += lastDigit;
                     return subNum;
-                };
+                }
                 // 以兆億萬分割四位值個別解析
                 foreach (var splitUnit in "兆億萬".ToArray())
                 {
@@ -105,7 +100,7 @@ namespace chinesenumberconverter
                     throw new ArgumentException("數字超出可轉換範圍");
                 var unitChars = "千百十".ToArray();
                 // 處理 0000 ~ 9999 範圍數字
-                Func<long, string> Conv4Digits = (subNum) =>
+                string Conv4Digits(long subNum)
                 {
                     var sb = new StringBuilder();
                     foreach (var c in unitChars)
@@ -116,11 +111,11 @@ namespace chinesenumberconverter
                             subNum = subNum % ChtUnits[c.ToString()];
                             sb.Append($"{ChtNums[(int)digit]}{c}");
                         }
-                        else sb.Append("零");
+                        else sb.Append('零');
                     }
                     sb.Append(ChtNums[(int)subNum]);
                     return sb.ToString();
-                };
+                }
                 var numString = new StringBuilder();
                 var forceRun = false;
                 foreach (var splitUnit in "兆億萬".ToArray())
@@ -128,7 +123,7 @@ namespace chinesenumberconverter
                     var unit = ChtUnits[splitUnit.ToString()];
                     if (n < unit)
                     {
-                        if (forceRun) numString.Append("零");
+                        if (forceRun) numString.Append('零');
                         continue;
                     }
                     forceRun = true;
