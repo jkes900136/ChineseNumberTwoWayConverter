@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\cy\\source\\repos\\chinesenumberconverter\\",
+  "WorkspaceRootPath": "D:\\chinesenumberconverter\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{53E2F55C-F4A2-4AA5-B274-2F29DD688DD8}|chinesenumberconverter\\chinesenumberconverter.csproj|c:\\users\\cy\\source\\repos\\chinesenumberconverter\\chinesenumberconverter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{53E2F55C-F4A2-4AA5-B274-2F29DD688DD8}|chinesenumberconverter\\chinesenumberconverter.csproj|d:\\chinesenumberconverter\\chinesenumberconverter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{53E2F55C-F4A2-4AA5-B274-2F29DD688DD8}|chinesenumberconverter\\chinesenumberconverter.csproj|solutionrelative:chinesenumberconverter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -14,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 316,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -25,14 +25,18 @@
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\cy\\source\\repos\\chinesenumberconverter\\chinesenumberconverter\\Program.cs",
+              "DocumentMoniker": "D:\\chinesenumberconverter\\chinesenumberconverter\\Program.cs",
               "RelativeDocumentMoniker": "chinesenumberconverter\\Program.cs",
-              "ToolTip": "C:\\Users\\cy\\source\\repos\\chinesenumberconverter\\chinesenumberconverter\\Program.cs",
+              "ToolTip": "D:\\chinesenumberconverter\\chinesenumberconverter\\Program.cs",
               "RelativeToolTip": "chinesenumberconverter\\Program.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAAEMAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T07:03:37.458Z",
               "EditorCaption": ""
