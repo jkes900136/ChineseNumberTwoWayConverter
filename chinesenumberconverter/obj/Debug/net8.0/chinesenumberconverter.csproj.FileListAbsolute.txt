@@ -1,0 +1,14 @@
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\bin\Debug\net8.0\chinesenumberconverter.exe
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\bin\Debug\net8.0\chinesenumberconverter.deps.json
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\bin\Debug\net8.0\chinesenumberconverter.runtimeconfig.json
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\bin\Debug\net8.0\chinesenumberconverter.dll
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\bin\Debug\net8.0\chinesenumberconverter.pdb
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.AssemblyInfoInputs.cache
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.AssemblyInfo.cs
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.csproj.CoreCompileInputs.cache
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.dll
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\refint\chinesenumberconverter.dll
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.pdb
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\chinesenumberconverter.genruntimeconfig.cache
+C:\Users\cy\source\repos\chinesenumberconverter\chinesenumberconverter\obj\Debug\net8.0\ref\chinesenumberconverter.dll
