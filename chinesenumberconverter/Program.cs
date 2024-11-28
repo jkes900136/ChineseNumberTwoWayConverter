@@ -10,9 +10,9 @@ namespace chinesenumberconverter
             Console.WriteLine("Hello, World!");
 
             Console.WriteLine(ChtNumConverter.ParseChtNum("2千萬美元"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("2千萬"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("2千500萬6千五百42"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("兩千萬"));
-                        
+
             Console.ReadKey();
         }
 
@@ -44,6 +44,7 @@ namespace chinesenumberconverter
                     long subNum = 0;
                     int numberGroupCounter = 0;
                     int originalDigit = 0;
+                    bool continuousDigit = false;
                     int[] numberGroups = Regex
                     .Matches(s, "[0-9]+") // groups of integer numbers
                     .OfType<Match>()
@@ -55,11 +56,17 @@ namespace chinesenumberconverter
                         if (ChtNums.Contains(c))
                         {
                             lastDigit = (long)ChtNums.IndexOf(c);
+                            continuousDigit = false;
                         }
                         else if (int.TryParse(c, out originalDigit))
                         {
+                            if (continuousDigit)
+                            {
+                                continue;
+                            }
                             lastDigit = numberGroups[numberGroupCounter];
                             numberGroupCounter++;
+                            continuousDigit = true;
                         }
                         else if (ChtUnits.ContainsKey(c))
                         {
@@ -67,6 +74,7 @@ namespace chinesenumberconverter
                             long unit = ChtUnits[c];
                             subNum += lastDigit * unit;
                             lastDigit = 0;
+                            continuousDigit = false;
                         }
                         //else
                         //{
