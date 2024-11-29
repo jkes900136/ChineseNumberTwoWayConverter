@@ -20,6 +20,37 @@ namespace chinesenumberconverter
             Console.WriteLine(ChtNumConverter.ParseChtNum("42千3佰萬"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("四二仟參佰万"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("4億零8佰四十二萬"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("人民幣189億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 5億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("USD 2.5億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("人民幣1.5億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("人民幣2億+"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 三千萬元"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 1.3億左右"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("1000+"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("150人"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 1.—1.5億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 150000000"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 百億➕"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("2千萬美元"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("全球萬人➕"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("公司估值人民幣40億， 收入1億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("年度累計保費人民幣2億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("NTD 10多個億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("十多個億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("NTD 2-3億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("NT ㄧ億"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum(""));
+            Console.WriteLine(ChtNumConverter.ParseChtNum(" "));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("undefined undefined"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 5 mil"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 50M"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 八千萬"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 270 Million"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 15 millions"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR > 300millions"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD >$5mil"));
+
             Console.ReadKey();
         }
 
@@ -34,12 +65,31 @@ namespace chinesenumberconverter
                 {"億", 100000000},
                 {"兆", 1000000000000}
             };
+            public static Dictionary<string, string> ChtCurrencies = new Dictionary<string, string>{
+                {"台", "NTD"},
+                {"臺", "NTD"},
+                {"NTD", "NT"},
+                {"美", "USD"},
+                {"USD", "US"},
+                {"人", "RMB"},
+                {"馬", "MYR"},
+                {"令", "MYR"},
+                {"港", "HKD"},
+                {"HKD", "HK"},
+                {"新", "SGD"},
+                {"星", "SGD"},
+                {"SGD", "SG"}
+            };
             public static string[] ChtUnitsArray = ChtUnits.Keys.ToArray();
             // 解析中文數字        
             public static long ParseChtNum(string chtNumString)
             {
-                chtNumString = ToTraditionalChinese(chtNumString);
-                Console.WriteLine(chtNumString + "->");
+                chtNumString = ToTraditionalChinese(chtNumString).ToUpper();
+                chtNumString = chtNumString.Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
+                            .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
+                            .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千")
+                            .Replace("MILLIONS", "百萬").Replace("MILLION", "百萬").Replace("MIL", "百萬").Replace("0M", "0百萬");
+                Console.WriteLine(chtNumString + "->" + GetCurrencyCode(chtNumString) + "萬");
                 var isNegative = false;
                 if (chtNumString.StartsWith("負"))
                 {
@@ -56,10 +106,7 @@ namespace chinesenumberconverter
                     int chineseNumberGroupCounter = 0;
                     int originalDigit = 0;
                     bool continuousDigit = false;
-
-                    s = s.Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
-                            .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
-                            .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千");
+                                        
                     int[] numberGroups = Regex
                     .Matches(s, "[0-9]+") // groups of integer numbers
                     .OfType<Match>()
@@ -106,7 +153,7 @@ namespace chinesenumberconverter
                     num += Parse4Digits(subNumString) * ChtUnits[splitUnit.ToString()];
                 }
                 num += Parse4Digits(chtNumString);
-                return isNegative ? -num : num;
+                return (isNegative ? -num : num) > 0 ? (num / 10000) : (isNegative ? -num : num);
             }
             // 轉換為中文數字
             public static string ToChtNum(long n)
@@ -155,6 +202,30 @@ namespace chinesenumberconverter
                 if (t.Length > 1) t = t.Trim('零');
                 t = Regex.Replace(t, "^一十", "十");
                 return (negtive ? "負" : string.Empty) + t;
+            }
+            public static string GetCurrencyCode(string chtNumString)
+            {
+                string currencyCode = "";
+                foreach (var rawChar in chtNumString)
+                {
+                    if (ChtCurrencies.TryGetValue(rawChar.ToString(), out _))
+                    {
+                        currencyCode = ChtCurrencies[rawChar.ToString()];
+                    }                    
+                }
+                foreach (var eachCode in ChtCurrencies.Values)
+                {
+                    if (chtNumString.IndexOf(eachCode) > -1)
+                    {
+                        currencyCode = eachCode;
+                        if (eachCode.Length == 2)
+                        {
+                            currencyCode += "D";
+                        }
+                    }
+                }
+
+                return currencyCode;
             }
         }
         public static string ToTraditionalChinese(string argSource)
