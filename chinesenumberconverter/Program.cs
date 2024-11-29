@@ -56,7 +56,6 @@ namespace chinesenumberconverter
                     int chineseNumberGroupCounter = 0;
                     int originalDigit = 0;
                     bool continuousDigit = false;
-                    bool continuousChineseNumber = false;
 
                     s = s.Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
                             .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
@@ -72,23 +71,9 @@ namespace chinesenumberconverter
                         var c = rawChar.ToString();
                         if (ChtNums.Contains(c))
                         {
-                            //if (continuousChineseNumber)
-                            //{
-                            //    continue;
-                            //}
-                            //lastDigit = 0;
-                            //for (int cnpi = chineseNumberGroups[chineseNumberGroupCounter].Length - 1; cnpi >= 0; cnpi--)
-                            //{
-                            //    if (int.TryParse(chineseNumberGroups[chineseNumberGroupCounter], out _))
-                            //    {
-                            //        continue;
-                            //    }
-                            //    lastDigit += chineseNumberGroups[chineseNumberGroupCounter][cnpi] * (10 ^ cnpi);
-                            //}
                             lastDigit = ChtNums.IndexOf(c);
                             chineseNumberGroupCounter++;
                             continuousDigit = false;
-                            continuousChineseNumber = true;
                         }
                         else if (int.TryParse(c, out originalDigit))
                         {
@@ -99,7 +84,6 @@ namespace chinesenumberconverter
                             lastDigit = numberGroups[numberGroupCounter];
                             numberGroupCounter++;
                             continuousDigit = true;
-                            continuousChineseNumber = false;
                         }
                         else if (ChtUnits.TryGetValue(c, out long unit))
                         {
@@ -107,7 +91,6 @@ namespace chinesenumberconverter
                             subNum += lastDigit * unit;
                             lastDigit = 0;
                             continuousDigit = false;
-                            continuousChineseNumber = false;
                         }
                     }
                     subNum += lastDigit;
@@ -165,7 +148,7 @@ namespace chinesenumberconverter
                     n = n % unit;
                     if (subNum > 0)
                         numString.Append(Conv4Digits(subNum).TrimEnd('零') + splitUnit);
-                    else numString.Append("零");
+                    else numString.Append('零');
                 }
                 numString.Append(Conv4Digits(n));
                 var t = Regex.Replace(numString.ToString(), "[零]+", "零");
