@@ -106,7 +106,7 @@ namespace chinesenumberconverter
                     int chineseNumberGroupCounter = 0;
                     int originalDigit = 0;
                     bool continuousDigit = false;
-                                        
+
                     int[] numberGroups = Regex
                     .Matches(s, "[0-9]+") // groups of integer numbers
                     .OfType<Match>()
@@ -211,7 +211,7 @@ namespace chinesenumberconverter
                     if (ChtCurrencies.TryGetValue(rawChar.ToString(), out _))
                     {
                         currencyCode = ChtCurrencies[rawChar.ToString()];
-                    }                    
+                    }
                 }
                 foreach (var eachCode in ChtCurrencies.Values)
                 {
