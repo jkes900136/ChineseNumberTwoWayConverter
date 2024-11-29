@@ -1,18 +1,24 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace chinesenumberconverter
 {
     internal class Program
     {
+        private const int LocaleSystemDefault = 0x0800;
+        private const int LcmapTraditionalChinese = 0x04000000;
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern int LCMapString(int locale, int dwMapFlags, string lpSrcStr, int cchSrc, string lpDestStr, int cchDest);
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
 
-            Console.WriteLine(ChtNumConverter.ParseChtNum("2千萬美元"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("2千500萬6千五百42"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("兩千萬"));
-
+            Console.WriteLine(ChtNumConverter.ParseChtNum("4億2千萬美元"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("四億2千500萬6千五百42"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("四亿2千500万6千五百42"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("42千萬"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("4億零8佰四十二萬"));
             Console.ReadKey();
         }
 
@@ -30,6 +36,8 @@ namespace chinesenumberconverter
             // 解析中文數字        
             public static long ParseChtNum(string chtNumString)
             {
+                chtNumString = ToTraditionalChinese(chtNumString + "->");
+                Console.WriteLine(chtNumString);
                 var isNegative = false;
                 if (chtNumString.StartsWith("負"))
                 {
@@ -52,7 +60,9 @@ namespace chinesenumberconverter
                     .ToArray();
                     foreach (var rawChar in s)
                     {
-                        var c = rawChar.ToString().Replace("〇", "零").Replace("兩", "二");
+                        var c = rawChar.ToString().Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
+                            .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
+                            .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千");
                         if (ChtNums.Contains(c))
                         {
                             lastDigit = ChtNums.IndexOf(c);
@@ -139,6 +149,13 @@ namespace chinesenumberconverter
                 t = Regex.Replace(t, "^一十", "十");
                 return (negtive ? "負" : string.Empty) + t;
             }
+        }
+        public static string ToTraditionalChinese(string argSource)
+        {
+            argSource = argSource.Replace("台", "#E58FB0").Replace("芸", "#E88AB8").Replace("准", "#E58786").Replace("賬", "帳").Replace("余額", "餘額").Replace("钟", "鍾"); // 台不轉為臺, 芸不轉為蕓, 准不轉為準
+            var t = new String(' ', argSource.Length);
+            LCMapString(LocaleSystemDefault, LcmapTraditionalChinese, argSource, argSource.Length, t, argSource.Length);
+            return t.Replace("#E58FB0", "台").Replace("#E88AB8", "芸").Replace("#E58786", "准").Replace("云", "雲").Replace("祎", "禕");
         }
         //-----------------------------
     }
