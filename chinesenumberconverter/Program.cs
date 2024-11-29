@@ -17,7 +17,8 @@ namespace chinesenumberconverter
             Console.WriteLine(ChtNumConverter.ParseChtNum("4億2千萬美元"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("四億2千500萬6千五百42"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("四亿2千500万6千五百42"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("42千萬"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("42千3佰萬"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("四二仟參佰万"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("4億零8佰四十二萬"));
             Console.ReadKey();
         }
@@ -26,18 +27,19 @@ namespace chinesenumberconverter
         {
             public static string ChtNums = "零一二三四五六七八九";
             public static Dictionary<string, long> ChtUnits = new Dictionary<string, long>{
-            {"十", 10},
-            {"百", 100},
-            {"千", 1000},
-            {"萬", 10000},
-            {"億", 100000000},
-            {"兆", 1000000000000}
-        };
+                {"十", 10},
+                {"百", 100},
+                {"千", 1000},
+                {"萬", 10000},
+                {"億", 100000000},
+                {"兆", 1000000000000}
+            };
+            public static string[] ChtUnitsArray = ChtUnits.Keys.ToArray();
             // 解析中文數字        
             public static long ParseChtNum(string chtNumString)
             {
-                chtNumString = ToTraditionalChinese(chtNumString + "->");
-                Console.WriteLine(chtNumString);
+                chtNumString = ToTraditionalChinese(chtNumString);
+                Console.WriteLine(chtNumString + "->");
                 var isNegative = false;
                 if (chtNumString.StartsWith("負"))
                 {
@@ -51,22 +53,42 @@ namespace chinesenumberconverter
                     long lastDigit = 0;
                     long subNum = 0;
                     int numberGroupCounter = 0;
+                    int chineseNumberGroupCounter = 0;
                     int originalDigit = 0;
                     bool continuousDigit = false;
+                    bool continuousChineseNumber = false;
+
+                    s = s.Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
+                            .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
+                            .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千");
                     int[] numberGroups = Regex
                     .Matches(s, "[0-9]+") // groups of integer numbers
                     .OfType<Match>()
                     .Select(match => int.Parse(match.Value))
                     .ToArray();
+                    string[] chineseNumberGroups = s.Split(ChtUnitsArray, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var rawChar in s)
                     {
-                        var c = rawChar.ToString().Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
-                            .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
-                            .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千");
+                        var c = rawChar.ToString();
                         if (ChtNums.Contains(c))
                         {
+                            //if (continuousChineseNumber)
+                            //{
+                            //    continue;
+                            //}
+                            //lastDigit = 0;
+                            //for (int cnpi = chineseNumberGroups[chineseNumberGroupCounter].Length - 1; cnpi >= 0; cnpi--)
+                            //{
+                            //    if (int.TryParse(chineseNumberGroups[chineseNumberGroupCounter], out _))
+                            //    {
+                            //        continue;
+                            //    }
+                            //    lastDigit += chineseNumberGroups[chineseNumberGroupCounter][cnpi] * (10 ^ cnpi);
+                            //}
                             lastDigit = ChtNums.IndexOf(c);
+                            chineseNumberGroupCounter++;
                             continuousDigit = false;
+                            continuousChineseNumber = true;
                         }
                         else if (int.TryParse(c, out originalDigit))
                         {
@@ -77,6 +99,7 @@ namespace chinesenumberconverter
                             lastDigit = numberGroups[numberGroupCounter];
                             numberGroupCounter++;
                             continuousDigit = true;
+                            continuousChineseNumber = false;
                         }
                         else if (ChtUnits.TryGetValue(c, out long unit))
                         {
@@ -84,6 +107,7 @@ namespace chinesenumberconverter
                             subNum += lastDigit * unit;
                             lastDigit = 0;
                             continuousDigit = false;
+                            continuousChineseNumber = false;
                         }
                     }
                     subNum += lastDigit;
@@ -154,7 +178,7 @@ namespace chinesenumberconverter
         {
             argSource = argSource.Replace("台", "#E58FB0").Replace("芸", "#E88AB8").Replace("准", "#E58786").Replace("賬", "帳").Replace("余額", "餘額").Replace("钟", "鍾"); // 台不轉為臺, 芸不轉為蕓, 准不轉為準
             var t = new String(' ', argSource.Length);
-            LCMapString(LocaleSystemDefault, LcmapTraditionalChinese, argSource, argSource.Length, t, argSource.Length);
+            _ = LCMapString(LocaleSystemDefault, LcmapTraditionalChinese, argSource, argSource.Length, t, argSource.Length);
             return t.Replace("#E58FB0", "台").Replace("#E88AB8", "芸").Replace("#E58786", "准").Replace("云", "雲").Replace("祎", "禕");
         }
         //-----------------------------
