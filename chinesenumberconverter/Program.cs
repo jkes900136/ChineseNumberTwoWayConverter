@@ -85,11 +85,12 @@ namespace chinesenumberconverter
             public static long ParseChtNum(string chtNumString)
             {
                 chtNumString = ToTraditionalChinese(chtNumString).ToUpper();
+                Console.WriteLine(chtNumString + "->" + GetCurrencyCode(chtNumString) + "萬");
                 chtNumString = chtNumString.Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
                             .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
                             .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千")
                             .Replace("MILLIONS", "百萬").Replace("MILLION", "百萬").Replace("MIL", "百萬").Replace("0M", "0百萬");
-                Console.WriteLine(chtNumString + "->" + GetCurrencyCode(chtNumString) + "萬");
+
                 var isNegative = false;
                 if (chtNumString.StartsWith("負"))
                 {
