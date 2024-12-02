@@ -78,7 +78,13 @@ namespace chinesenumberconverter
                 {"HKD", "HK"},
                 {"新", "SGD"},
                 {"星", "SGD"},
-                {"SGD", "SG"}
+                {"SGD", "SG"},
+                {"澳", "AUD"},
+                {"AUD", "AU"},
+                {"歐", "EUR"},
+                {"日", "JPY"},
+                {"泰", "THB"},
+                {"銖", "THB"}
             };
             public static string[] ChtUnitsArray = ChtUnits.Keys.ToArray();
             // 解析中文數字        
