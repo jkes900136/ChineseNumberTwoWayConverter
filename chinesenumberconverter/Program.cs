@@ -68,10 +68,12 @@ namespace chinesenumberconverter
             public static Dictionary<string, string> ChtCurrencies = new Dictionary<string, string>{
                 {"台", "NTD"},
                 {"臺", "NTD"},
+                {"TWD", "NTD"},
                 {"NTD", "NT"},
                 {"美", "USD"},
                 {"USD", "US"},
                 {"人", "RMB"},
+                {"CNY", "RMB"},
                 {"馬", "MYR"},
                 {"令", "MYR"},
                 {"港", "HKD"},
