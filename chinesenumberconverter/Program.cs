@@ -85,7 +85,7 @@ namespace chinesenumberconverter
             public static long ParseChtNum(string chtNumString)
             {
                 chtNumString = ToTraditionalChinese(chtNumString).ToUpper();
-                Console.WriteLine(chtNumString + "->" + GetCurrencyCode(chtNumString) + "萬");
+                Console.WriteLine(chtNumString + "->" + GetCurrencyCode(chtNumString));
                 chtNumString = chtNumString.Replace(" ", "").Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二")
                             .Replace("參", "三").Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七")
                             .Replace("捌", "八").Replace("玖", "九").Replace("拾", "十").Replace("佰", "百").Replace("仟", "千")
@@ -154,7 +154,7 @@ namespace chinesenumberconverter
                     num += Parse4Digits(subNumString) * ChtUnits[splitUnit.ToString()];
                 }
                 num += Parse4Digits(chtNumString);
-                return (isNegative ? -num : num) > 0 ? (num / 10000) : (isNegative ? -num : num);
+                return (isNegative ? -num : num) > 0 ? num : (isNegative ? -num : num);
             }
             // 轉換為中文數字
             public static string ToChtNum(long n)
