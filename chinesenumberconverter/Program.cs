@@ -40,11 +40,11 @@ namespace chinesenumberconverter
             Console.WriteLine(ChtNumConverter.ParseChtNum("十多個億"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("NTD 2-3億"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("NT ㄧ億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum(""));
-            Console.WriteLine(ChtNumConverter.ParseChtNum(" "));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 15m-20m"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 40 mils"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("undefined undefined"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 5 mil"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 50M"));
+            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 50 M"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 八千萬"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 270 Million"));
             Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 15 millions"));
@@ -86,10 +86,10 @@ namespace chinesenumberconverter
             {
                 chtNumString = ToTraditionalChinese(chtNumString).ToUpper();
                 Console.WriteLine(chtNumString + "->" + GetCurrencyCode(chtNumString) + "萬");
-                chtNumString = chtNumString.Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二").Replace("參", "三")
-                            .Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七").Replace("捌", "八").Replace("玖", "九")
-                            .Replace("拾", "十").Replace("佰", "百").Replace("仟", "千")
-                            .Replace("MILLIONS", "百萬").Replace("MILLION", "百萬").Replace("MIL", "百萬").Replace("0M", "0百萬");
+                chtNumString = chtNumString.Replace(" ", "").Replace("〇", "零").Replace("壹", "一").Replace("兩", "二").Replace("貳", "二")
+                            .Replace("參", "三").Replace("肆", "四").Replace("伍", "五").Replace("陸", "六").Replace("柒", "七")
+                            .Replace("捌", "八").Replace("玖", "九").Replace("拾", "十").Replace("佰", "百").Replace("仟", "千")
+                            .Replace("MILLION", "百萬").Replace("MIL", "百萬").Replace("0M", "0百萬").Replace("5M", "5百萬");
 
                 var isNegative = false;
                 if (chtNumString.StartsWith("負"))
