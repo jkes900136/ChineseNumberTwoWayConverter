@@ -116,10 +116,10 @@ namespace chinesenumberconverter
                     int originalDigit = 0;
                     bool continuousDigit = false;
 
-                    int[] numberGroups = Regex
+                    long[] numberGroups = Regex
                     .Matches(s, "[0-9]+") // groups of integer numbers
                     .OfType<Match>()
-                    .Select(match => int.Parse(match.Value))
+                    .Select(match => long.Parse(match.Value))
                     .ToArray();
                     string[] chineseNumberGroups = s.Split(ChtUnitsArray, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var rawChar in s)
