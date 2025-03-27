@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -12,46 +12,31 @@ namespace chinesenumberconverter
         private static extern int LCMapString(int locale, int dwMapFlags, string lpSrcStr, int cchSrc, string lpDestStr, int cchDest);
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("歡迎使用中文數字轉換器！");
+            Console.WriteLine("請輸入要轉換的文字（輸入 'exit' 結束程式）：");
 
-            Console.WriteLine(ChtNumConverter.ParseChtNum("4億2千萬美元"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("四億2千500萬6千五百42"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("四亿2千500万6千五百42"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("42千3佰萬"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("四二仟參佰万"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("4億零8佰四十二萬"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("人民幣189億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 5億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("USD 2.5億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("人民幣1.5億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("人民幣2億+"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 三千萬元"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 1.3億左右"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("1000+"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("150人"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 1.—1.5億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 150000000"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("RMB 百億➕"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("2千萬美元"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("全球萬人➕"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("公司估值人民幣40億， 收入1億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("年度累計保費人民幣2億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("NTD 10多個億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("十多個億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("NTD 2-3億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("NT ㄧ億"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 15m-20m"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 40 mils"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("undefined undefined"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 5 mil"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 50 M"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 八千萬"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD 270 Million"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR 15 millions"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("MYR > 300millions"));
-            Console.WriteLine(ChtNumConverter.ParseChtNum("SGD >$5mil"));
+            while (true)
+            {
+                Console.Write("> ");
+                string input = Console.ReadLine();
 
-            Console.ReadKey();
+                if (string.IsNullOrEmpty(input) || input.ToLower() == "exit")
+                {
+                    Console.WriteLine("謝謝使用，再見！");
+                    break;
+                }
+
+                try
+                {
+                    long result = ChtNumConverter.ParseChtNum(input);
+                    Console.WriteLine($"轉換結果: {result:N0}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"轉換失敗: {ex.Message}");
+                }
+                Console.WriteLine();
+            }
         }
 
         public class ChtNumConverter
